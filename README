@@ -1,0 +1,4 @@
+Quizer was a program I made to help me study for SAT vocabs. It just displayed random words from the dataset, then prompted me on if I got it correct or not + how difficult I perceived the word to be. This data was used to determine how often a word appeared, until it got easy enough. 
+
+- Feni Varughese
+November 2009

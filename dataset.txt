@@ -1,0 +1,18 @@
+*Philosophy Exam practice dataset
+*Written by Feni Varughese to study for test...
+* Topics:
+*Berkeley (Principles: Preface and Introduction)
+*Berkeley (Principles: Part I)
+*Hume (Enquiry: Sections I-IV)
+*Hume (Enquiry, Sections V-VI)
+*Hume (Enquiry, Sections VII, XII; Treatise, Book I (Of Personal Identity))
+*
+*
+**********************************************************************************************
+Empiricism . The doctrine that knowledge derives from experience . 1. 
+Rationalism . The doctrine that knowledge is acquired by reason without resort to experience . 1 .
+Idealism . Ideas are the only reality . 1. 
+Representationalism . The belief that the conscious perception of the world is actually an internal replica of the world of the mind of the beholder . 1. 
+Purpose of Berkley's The Principles. Against skepticism and in defense of common sense. 1. 
+According to Berkley, What are the causes of skepticism. Philosphy is the cause of skepticims Common sense doesn't lead to skepticism about senses The nature and abuse of language; the concept of abstract ideas. 1. 
+What is the question posed by cartesian skepticism, a product of the representationalist theory of perception. Do my sense experiences accurately depict the world? What can I know about objects if I don't directly experience them?. 1. 

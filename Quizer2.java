@@ -18,77 +18,61 @@ import java.io.*;
 import java.util.*;
 import java.util.Random;
 
-public class quizer{
+public class Quizer2{
+	
+	// TODO: Time propogation of error. You think you know it, but you're bound to forget it over time. 
 	
 	public static void main(String args[])throws IOException{
 		System.out.println("??????Quizzer??????");
-		System.out.println("Version 1.0");
+		System.out.println("Version 1.1");
 		System.out.println("Author: Feni Varughese");
 		System.out.println("Quizzer: A simple quiz program ");
 		System.out.println("Instructions:"+"\n"+"The program will display a word");
 		System.out.println("Press enter when you are ready to see the meaning");
 		System.out.println("Provide the program with feedback on how hard you thought the word was.\n");
 		
-		FileReader inFile = new FileReader("dataset.txt");	
-		BufferedReader inStream = new BufferedReader(inFile);
-		String temp = "";
+		
+		Scanner input = new Scanner(new File("dataset.txt"));
 		ArrayList questions = new ArrayList<Question>();
-		// If file has content and content is not a comment
+		String temp = "";
+		
 		int counter = 0;
-		while((temp = inStream.readLine()) != null){
+		while(input.hasNext()){
+			temp = input.nextLine();
 			counter++;
-			// Anything following the * is a comment
-			if((temp.charAt(0) != '*')){
-				String question = "";
-				String answer = "";
-				String priority = "";
-				int pointer = 0;
-				for(int k = 0; k < temp.length(); k++){
-					if(temp.charAt(k) != '.'){
-						if(pointer == 0){
-							question+=temp.charAt(k);
-						}
-						else if(pointer == 1){
-							answer+=temp.charAt(k);
-						}
-						else if(pointer == 2){
-							priority+=temp.charAt(k);
-						}
-					}
-					else{
-						pointer++;
-					}
-				}
-				Question q = new Question(question,answer,(int)pi(priority));
+			if(!temp.startsWith("*")){ // Make sure it's not a comment..
+				StringTokenizer st = new StringTokenizer(temp,".");
+				String question = st.nextToken();
+				String answer = st.nextToken();
+				String priority = st.nextToken();
+				Question q = new Question(question,answer,(int)pi(priority.trim()));
 				questions.add(q);
-//				System.out.print(counter);		  // Debugger statement
-//				System.out.println(q.toString2());// Also a debugger
 			}
 		}
 		
-		Scanner input = new Scanner(System.in);	 
+		System.out.println("Done parsing the file successfully...");
+		input = new Scanner(System.in);	 
 		// Loops through the questions infinetly
-		while(true){
-			Random rnd = new Random();
+		Random rand = new Random();
+		while(questions.size() > 0){
 			boolean valid = false;
 			int count = 0;
 			Question current = new Question("No Questions Found","No Answers Found",9);
 			while(!valid){
-				int loc = rnd.nextInt(questions.size());
+				int loc = rand.nextInt(questions.size());
+				
+				System.out.print("Question ("+loc+") : " );
+				
 				current = (Question) questions.get(loc);
 				if(current.getPriority() > 0){	valid = true;	}
 				else{	questions.remove(loc);	}
 				count++;
-				
-				// Just escapes because it's taking too long to find a question
-				// A shortcut to avoid infinite looping if there are no priority
-				// 0+ Questions
-				if(count > 25){
+				if(count > 25){ // Taking too long to find a valid question... Exit
 					valid = true;
 				}
 			}
 			// Print out the word
-			System.out.print("\n"+current+"?   ");
+			System.out.print(current+"?   ");
 			input.nextLine();
 			System.out.print("Answer: "+current.getAnswer()+"    ");
 			String str = input.nextLine();
@@ -98,22 +82,17 @@ public class quizer{
 			}
 			System.out.println();
 		}
+		
+		// TODO: make a save method that saves the state of the questions with their respective
+		// priorities...
 	}
 
 	public static int pi(String s)	{	return Integer.parseInt(s);	}
 	
 	public static boolean isValidNum(String str){
-		boolean b = true;
-		for(int k = 0; k < str.length(); k++){
-			char c = str.charAt(k);
-			if(c == '0' || c== '1' || c== '2' || c== '3' || c== '4' 
-			|| c== '5' || c== '6' || c== '7' || c== '8' || c== '9'){
-			}
-			else{	b = false;	}
-		}
-		// Too long. Has to be from 0-9
-		if(str.length() > 1){	b = false;	}
-		return b;
+		if(str.length() == 1)
+			return Character.isDigit(str.charAt(0));
+		return false;
 	}
 }
 class Question{
@@ -125,19 +104,9 @@ class Question{
 		answer = a;
 		priority = p;
 	}
-	public String toString(){
-		return ""+priority+". "+question;
-	}
-	public String toString2(){
-		return ""+question;
-	}
-	public String getAnswer(){
-		return answer;
-	}
-	public int getPriority(){
-		return priority;
-	}
-	public void setPriority(int p){
-		priority = (priority+p)/2;
-	}
+	public String toString(){	return ""+priority+". "+question;	}
+	public String toString2(){	return ""+question;	}
+	public String getAnswer(){	return answer;	}
+	public int getPriority(){	return priority;	}
+	public void setPriority(int p){	priority = (priority+p)/2;	}
 }
